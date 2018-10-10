@@ -3,16 +3,27 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title class="ionTitle">Calculer un e-liquide</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
-
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-item>
+    <ion-label class="text-responsive" color="primary" floating>Arôme (%)</ion-label>
+    <ion-input (tap)="erreur = true" type="number" [(ngModel)]="parome" required="true" clearInput=true min="1" max="50"></ion-input>
+  </ion-item>
+  <p style="color: grey"><b>Max</b> : 50% - <b>Recommandé</b> : 10%</p>
+  <ion-item>
+    <ion-label class="text-responsive" color="primary" floating>Quantité de liquide à obtenir (mL)</ion-label>
+    <ion-input (tap)="erreur = true" type="number" [(ngModel)]="totaLiquide" required="true" clearInput=true min="1" max="5000"></ion-input>
+  </ion-item>
+  <p style="color: grey">Max : 1000 (mL)</p>
+  <button (tap)="showGouttes()" ion-button full icon-only>
+    <ion-icon name="calculator"></ion-icon>
+  </button>
+  <div *ngIf="!erreur">
+    <ion-item >
+      <p class="text-responsive">{{strResultat[0]}}<br><br>{{strResultat[1]}}<br>{{strResultat[2]}}</p>
+    </ion-item>
+  </div>
 </ion-content>

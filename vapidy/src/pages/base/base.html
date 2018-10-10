@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title class="ionTitle">Calculer une base</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+<!-- MENU SEGMENTS -->
+  <div padding>
+  <ion-segment [(ngModel)]="typeDosage">
+    <ion-segment-button (tap)="typeDosage = 'SegmentBaseAObtenir'; setSegment()" value="SegmentBaseAObtenir">
+      Base à obtenir
+    </ion-segment-button>
+    <ion-segment-button (tap)="typeDosage = 'SegmentDejaUneBase'; setSegment()" value="SegmentDejaUneBase">
+      J'ai déjà une base
+    </ion-segment-button>
+  </ion-segment>
+</div>
+<!-- /MENU SEGMENTS -->
+
+<!-- CONTENU SEGMENT BASE A OBTENIR -->
+<div [ngSwitch]="typeDosage">
+  <ion-list *ngSwitchCase="'SegmentBaseAObtenir'">
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Quantité de base à obtenir (mL)</ion-label>
+      <ion-input (tap)="erreurObtenir = true" type="number" [(ngModel)]="baseAObtenir" required="true" clearInput=true min="1" max="1000"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Taux de nicotine à obtenir (mg/mL)</ion-label>
+      <ion-input (tap)="erreurObtenir = true" type="number" [(ngModel)]="tauxNicotineAObtenir" required="true" clearInput=true min="1" max="21"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Contenance d'un booster (mL)</ion-label>
+      <ion-input (tap)="erreurObtenir = true" type="number" [(ngModel)]="contenanceBooster" required="true" clearInput=true min="1" max="10"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Taux de nicotine par booster (mg/mL)</ion-label>
+      <ion-input (tap)="erreurObtenir = true" type="number" [(ngModel)]="tauxNicotineBooster" required="true" clearInput=true min="1" max="21"></ion-input>
+    </ion-item>
+    <button (tap)="showBaseObtenir()" ion-button full icon-only>
+      <ion-icon name="calculator"></ion-icon>
+    </button>
+    <div *ngIf="!erreurObtenir">
+      <ion-item >
+        <p class="text-responsive">{{strResultatObtenir[0]}}<br>{{strResultatObtenir[1]}}<br><br>{{strResultatObtenir[2]}}</p>
+      </ion-item>
+    </div>
+  </ion-list>
+
+<!-- CONTENU SEGMENT DEJA UNE BASE -->
+  <ion-list *ngSwitchCase="'SegmentDejaUneBase'">
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Quantité de la base disponible (mL)</ion-label>
+      <ion-input (tap)="erreurDispo = true" type="number" [(ngModel)]="baseDispo" required="true" clearInput=true min="1" max="1000"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Taux de nicotine à obtenir (mg/mL)</ion-label>
+      <ion-input (tap)="erreurDispo = true" type="number" [(ngModel)]="tauxNicotineAObtenirDispo" required="true" clearInput=true min="1" max="21"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Contenance d'un booster (mL)</ion-label>
+      <ion-input (tap)="erreurDispo = true" type="number" [(ngModel)]="contenanceBooster" required="true" clearInput=true min="1" max="10"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-responsive" color="primary" floating>Taux de nicotine par booster (mg/mL)</ion-label>
+      <ion-input (tap)="erreurDispo = true" type="number" [(ngModel)]="tauxNicotineBooster" required="true" clearInput=true min="1" max="21"></ion-input>
+    </ion-item>
+    <button  ion-button full icon-only> <!-- (TAP) RETIRE -->
+      <ion-icon name="calculator"></ion-icon>
+    </button>
+    <div *ngIf="!erreurDispo">
+      <ion-item >
+        <p class="text-responsive">{{strResultatDispo[0]}}<br>{{strResultatDispo[1]}}<br><br>{{strResultatDispo[2]}}</p>
+      </ion-item>
+    </div>
+  </ion-list>
+</div>
+<!-- /CONTENU SEGMENTS -->
+
+
+</ion-content>
