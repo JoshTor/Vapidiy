@@ -16,6 +16,7 @@ export class BasePage {
   strResultatObtenir: string[] = ["", "", ""];
 
   baseDispo: number;
+  tauxBaseDispo: number;
   tauxNicotineAObtenirDispo: number;
   strResultatDispo: string[] = ["", "", ""];
 
@@ -67,12 +68,29 @@ export class BasePage {
 
   public showBaseDispo()
   {
+    console.log('test');
     if(this.baseDispo < 1000 && this.baseDispo > 1 &&
-      this.tauxNicotineAObtenirDispo < 21 && this.tauxNicotineAObtenirDispo > 1 &&
-      this.contenanceBooster <= 10 && this.contenanceBooster > 1 &&
-      this.tauxNicotineBooster  < 21 && this.tauxNicotineBooster > 1)
+       this.tauxBaseDispo < 21 && this.tauxBaseDispo > 0 &&
+       this.tauxNicotineAObtenirDispo < 21 && this.tauxNicotineAObtenirDispo > 1 &&
+       this.contenanceBooster <= 10 &&  this.contenanceBooster > 1 &&
+       this.tauxNicotineBooster  < 21 && this.tauxNicotineBooster > 1)
       {
-      //FAIRE LE CALCUL
+
+      /*
+        FAIRE CALCUL
+
+        DISPO : 100 ml de 6mg/ml
+        JE VEUX : 3mg/ml
+
+        Nicotine :
+        1 Booster = 10*20 = 200mg
+        Dispo : 100*6 = 600mg
+
+        if tauxBaseDispo > Voulu
+          ajouterBase
+        elseif tauxBaseDispo < Voulu
+          ajouterBooster
+      */
 
       /*this.strResultatDispo[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
       this.strResultatDispo[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
