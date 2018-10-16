@@ -68,7 +68,6 @@ export class BasePage {
 
   public showBaseDispo()
   {
-    console.log('test');
     if(this.baseDispo < 1000 && this.baseDispo > 1 &&
        this.tauxBaseDispo < 21 && this.tauxBaseDispo > 0 &&
        this.tauxNicotineAObtenirDispo < 21 && this.tauxNicotineAObtenirDispo > 1 &&
@@ -76,26 +75,61 @@ export class BasePage {
        this.tauxNicotineBooster  < 21 && this.tauxNicotineBooster > 1)
       {
 
-      /*
-        FAIRE CALCUL
+        /*
+          FAIRE CALCUL
 
-        DISPO : 100 ml de 6mg/ml
-        JE VEUX : 3mg/ml
+          DISPO : 100 ml de 6mg/ml
+          JE VEUX : 3mg/ml
 
-        Nicotine :
-        1 Booster = 10*20 = 200mg
-        Dispo : 100*6 = 600mg
+          Nicotine :
+          1 Booster = 10*20 = 200mg
+          Dispo : 100*6 = 600mg
 
-        if tauxBaseDispo > Voulu
-          ajouterBase
-        elseif tauxBaseDispo < Voulu
-          ajouterBooster
-      */
+          if tauxBaseDispo > Voulu
+            ajouterBase
+          elseif tauxBaseDispo < Voulu
+            ajouterBooster
 
-      /*this.strResultatDispo[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
-      this.strResultatDispo[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
-      this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";*/
-      this.erreurObtenir = false;
+            this.baseDispo : Dispo
+            this.tauxBaseDispo
+
+            this.tauxNicotineAObtenirDispo
+            this.contenanceBooster
+        */
+        // Conversion en type number
+        this.baseDispo = +this.baseDispo;
+        this.tauxBaseDispo = +this.tauxBaseDispo;
+        this.tauxNicotineAObtenirDispo = +this.tauxNicotineAObtenirDispo;
+        this.contenanceBooster = +this.contenanceBooster;
+        this.tauxNicotineBooster = +this.tauxNicotineBooster;
+
+        if(this.tauxBaseDispo > this.tauxNicotineAObtenirDispo)
+        {
+          //ajouterBase
+          let mlBaseAjouter:number; let mgDeNicotine:number; let mlBaseTotal:number;
+
+          let ratio:number = this.tauxNicotineAObtenirDispo/this.tauxBaseDispo;
+
+          mlBaseAjouter = this.baseDispo*ratio;
+          mlBaseTotal = this.baseDispo+mlBaseAjouter;
+          mgDeNicotine = mlBaseTotal*this.tauxNicotineAObtenirDispo;
+
+          this.strResultatDispo[0] = "Il vous faudra ajouter "+this.precisionRound(mlBaseAjouter, 1)+" ml de base nicotinée en 0mg/ml.";
+          this.strResultatDispo[1] = "Base totale après ajout : "+this.precisionRound(this.baseDispo + mlBaseAjouter, 1)+"ml.";
+          this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";
+          this.erreurDispo = false;
+        }
+        else //tauxBaseDispo < Voulu
+        {
+          //ajouterBooster
+          var nbBoosters = 0; var mgDeNicotine = 0;
+
+          /*this.strResultatDispo[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
+          this.strResultatDispo[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
+          this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";*/
+        }
+
+        this.erreurObtenir = false;
       }
       else
       {
