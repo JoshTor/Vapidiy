@@ -72,7 +72,7 @@
       <ion-label class="text-responsive" color="primary" floating>Taux de nicotine par booster (mg/mL)</ion-label>
       <ion-input (tap)="erreurDispo = true" type="number" [(ngModel)]="tauxNicotineBooster" required="true" clearInput=true min="1" max="21"></ion-input>
     </ion-item>
-    <button (tap)="showBaseDispo()"  ion-button full icon-only> <!-- (TAP) RETIRE -->
+    <button (tap)="showBaseDispo()"  ion-button full icon-only>
       <ion-icon name="calculator"></ion-icon>
     </button>
     <div *ngIf="!erreurDispo">
@@ -83,6 +83,4 @@
   </ion-list>
 </div>
 <!-- /CONTENU SEGMENTS -->
-
-
 </ion-content>

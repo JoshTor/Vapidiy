@@ -27,29 +27,22 @@ export class BasePage {
   erreurObtenir: boolean = false;
   erreurDispo: boolean = false;
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private nativeStorage: NativeStorage, public alertCtrl: AlertController) {}
 
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private nativeStorage: NativeStorage, public alertCtrl: AlertController) {
-
-  }
-
-// *********** CALCUL ************
-  public precisionRound(nb: number,precision: number) {
-  var factor = Math.pow(10, precision);
+  public precisionRound(nb: number,precision: number){
+  const factor = Math.pow(10, precision);
   return Math.round(nb * factor) / factor;
   }
 
-  public showBaseObtenir()
-  {
+  public showBaseObtenir(){
     if(this.baseAObtenir < 1000 && this.baseAObtenir > 1 &&
       this.tauxNicotineAObtenir < 21 && this.tauxNicotineAObtenir > 1 &&
       this.contenanceBooster <= 10 && this.contenanceBooster > 1 &&
       this.tauxNicotineBooster  < 21 && this.tauxNicotineBooster > 1)
       {
-        var mgDeNicotine = this.baseAObtenir * this.tauxNicotineAObtenir;
-        var mgDeNicotineBooster = this.tauxNicotineBooster * this.contenanceBooster;
-
-        var nbBoosters = mgDeNicotine / mgDeNicotineBooster;
+        const mgDeNicotine = this.baseAObtenir * this.tauxNicotineAObtenir;
+        const mgDeNicotineBooster = this.tauxNicotineBooster * this.contenanceBooster;
+        const nbBoosters = mgDeNicotine / mgDeNicotineBooster;
 
         this.strResultatObtenir[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
         this.strResultatObtenir[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
@@ -58,16 +51,13 @@ export class BasePage {
       }
       else
       {
-        this.strResultatObtenir[0] = "";
-        this.strResultatObtenir[1] = "";
-        this.strResultatObtenir[2] = "";
+        for(let i = 0; i<2; i++){this.strResultatObtenir[i] = "";}
         this.showToastError();
         this.erreurObtenir = true;
       }
   }
 
-  public showBaseDispo()
-  {
+  public showBaseDispo(){
     if(this.baseDispo < 1000 && this.baseDispo > 1 &&
        this.tauxBaseDispo < 21 && this.tauxBaseDispo > 0 &&
        this.tauxNicotineAObtenirDispo < 21 && this.tauxNicotineAObtenirDispo > 1 &&
@@ -103,8 +93,7 @@ export class BasePage {
         this.contenanceBooster = +this.contenanceBooster;
         this.tauxNicotineBooster = +this.tauxNicotineBooster;
 
-        if(this.tauxBaseDispo > this.tauxNicotineAObtenirDispo)
-        {
+        if(this.tauxBaseDispo > this.tauxNicotineAObtenirDispo){
           //ajouterBase
           let mlBaseAjouter:number; let mgDeNicotine:number; let mlBaseTotal:number;
 
@@ -119,8 +108,7 @@ export class BasePage {
           this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";
           this.erreurDispo = false;
         }
-        else //tauxBaseDispo < Voulu
-        {
+        else{  //tauxBaseDispo < Voulu
           //ajouterBooster
           var nbBoosters = 0; var mgDeNicotine = 0;
 
@@ -128,22 +116,14 @@ export class BasePage {
           this.strResultatDispo[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
           this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";*/
         }
-
         this.erreurObtenir = false;
       }
-      else
-      {
-        this.strResultatDispo[0] = "";
-        this.strResultatDispo[1] = "";
-        this.strResultatDispo[2] = "";
+      else{
+        for(let i = 0; i<2; i++){this.strResultatDispo[i] = "";}
         this.showToastError();
         this.erreurDispo = true;
       }
   }
-
-
-
-
 
   /*
      Obtenir xL de Base en y mg/ml
@@ -159,8 +139,7 @@ export class BasePage {
       this.showSegment();
   }
 
-  public setSegment(): void
-  {
+  public setSegment(): void{
     this.nativeStorage.setItem('segment-selected', {typeDosage: this.typeDosage})
     .then(
       () => console.log('Sauvegarde du choix..'),
@@ -169,8 +148,7 @@ export class BasePage {
     this.showSegment();
   }
 
-  public showToastError(): void
-  {
+  public showToastError(): void{
     let toastError = this.toastCtrl.create({
       message: "Des champs sont manquants ou incorrects",
       duration: 2000,
@@ -179,17 +157,12 @@ export class BasePage {
     toastError.present();
   }
 
-  public showSegment(): void
-  {
+  public showSegment(): void{
     this.nativeStorage.getItem('segment-selected')
-    .then(
-      data => {this.typeDosage = data.typeDosage},
-      error => console.error(error)
-    );
+    .then(data => {this.typeDosage = data.typeDosage}, error => console.error(error));
   }
 
-  public showAlert(message: string)
-  {
+  public showAlert(message: string){
       let alert = this.alertCtrl.create({
       title: '!',
       subTitle: message,
