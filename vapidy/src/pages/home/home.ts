@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController  } from 'ionic-angular';
+import { PrecisionRound } from '../../app/pipes/pipesFunctions';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  pipes: [PrecisionRound]
 })
 export class HomePage {
 
@@ -13,24 +15,18 @@ export class HomePage {
     gouttes: number;
     gouttesML: number;
 
-    erreur: boolean = false;
+    erreur: boolean = true;
     strResultat: string[] = ["", "", ""];
+
+    //Variables résultats
+    qArome: number;
+    nbGouttes: number
 
     constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
 
-    public precisionRound(nb: number,precision: number){
-    const factor = Math.pow(10, precision);
-    return Math.round(nb * factor) / factor;
-    }
-
     private showGouttes(){
       if(this.parome < 50 && this.parome > 1 && this.totaLiquide < 1000 && this.totaLiquide > 1 ){
-        const qArome = this.parome/100*this.totaLiquide;
-        const nbGouttes = qArome*30;
-        const liquideRestant = this.totaLiquide - qArome;
-        this.strResultat[0] = "Résultat de votre composition finale : ";
-        this.strResultat[1] = "Arôme : "+this.precisionRound(qArome, 1)+" mL soit "+this.precisionRound(nbGouttes, 0)+" gouttes. ";
-        this.strResultat[2] = "Liquide : "+this.precisionRound(liquideRestant, 1)+" mL";
+        this.qArome = this.parome/100*this.totaLiquide;
         this.erreur = false;
       }
       else{

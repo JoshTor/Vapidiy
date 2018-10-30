@@ -45,7 +45,7 @@
     </button>
     <div *ngIf="!erreurObtenir">
       <ion-item >
-        <p class="text-responsive">{{strResultatObtenir[0]}}<br>{{strResultatObtenir[1]}}<br><br>{{strResultatObtenir[2]}}</p>
+        <p class="text-responsive">Il vous faudra {{nbBoosters | precisionRound:1}} boosters.<br>Soit {{contenanceBooster*nbBoosters | precisionRound:1}} mL de boosters.<br><br>Nicotine au total : {{mgDeNicotine | precisionRound:1}}mg.</p>
       </ion-item>
     </div>
   </ion-list>
@@ -77,7 +77,7 @@
     </button>
     <div *ngIf="!erreurDispo">
       <ion-item >
-        <p class="text-responsive">{{strResultatDispo[0]}}<br>{{strResultatDispo[1]}}<br><br>{{strResultatDispo[2]}}</p>
+        <p class="text-responsive">Il vous faudra ajouter {{nbBoosters | precisionRound:1}} ml de base nicotinée en 0mg/ml.<br>Base totale après ajout : {{baseDispo+mlBaseAjouter | precisionRound:1}}ml.<br><br>Nicotine au total : {{mgDeNicotine | precisionRound:1}}mg.</p>
       </ion-item>
     </div>
   </ion-list>

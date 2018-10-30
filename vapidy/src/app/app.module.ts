@@ -11,13 +11,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NativeStorage } from '@ionic-native/native-storage';
+import { PrecisionRound } from './pipes/pipesFunctions';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    BasePage
+    BasePage,
+    PrecisionRound
   ],
   imports: [
     BrowserModule,

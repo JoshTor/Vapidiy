@@ -23,7 +23,7 @@
   </button>
   <div *ngIf="!erreur">
     <ion-item >
-      <p class="text-responsive">{{strResultat[0]}}<br><br>{{strResultat[1]}}<br>{{strResultat[2]}}</p>
+      <p class="text-responsive">Résultat de votre composition finale :{{erreur}} <br><br>Arôme : {{qArome | precisionRound:1}} mL soit {{qArome*30 | precisionRound:0}} gouttes. <br>Liquide : {{totaLiquide-qArome | precisionRound:1}} mL</p>
     </ion-item>
   </div>
 </ion-content>

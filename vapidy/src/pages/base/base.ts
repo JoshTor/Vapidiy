@@ -3,11 +3,13 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, ToastController, NavParams, AlertController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { PrecisionRound } from '../../app/pipes/pipesFunctions';
 
 @IonicPage()
 @Component({
   selector: 'page-base',
   templateUrl: 'base.html',
+  pipes: [PrecisionRound]
 })
 export class BasePage {
 
@@ -24,14 +26,19 @@ export class BasePage {
   tauxNicotineBooster: number = 20;
 
   typeDosage: string;
-  erreurObtenir: boolean = false;
-  erreurDispo: boolean = false;
+  erreurObtenir: boolean = true;
+  erreurDispo: boolean = true;
+
+  // Variables résultats
+  nbBoosters: number;
+  mgDeNicotine: number;
+
+  mlBaseAjouter: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private nativeStorage: NativeStorage, public alertCtrl: AlertController) {}
-
-  public precisionRound(nb: number,precision: number){
-  const factor = Math.pow(10, precision);
-  return Math.round(nb * factor) / factor;
+  precisionRound(nb: number,precision: number){
+    const factor = Math.pow(10, precision);
+    return Math.round(nb * factor) / factor;
   }
 
   public showBaseObtenir(){
@@ -40,13 +47,10 @@ export class BasePage {
       this.contenanceBooster <= 10 && this.contenanceBooster > 1 &&
       this.tauxNicotineBooster  < 21 && this.tauxNicotineBooster > 1)
       {
-        const mgDeNicotine = this.baseAObtenir * this.tauxNicotineAObtenir;
+        this.mgDeNicotine = this.baseAObtenir * this.tauxNicotineAObtenir;
         const mgDeNicotineBooster = this.tauxNicotineBooster * this.contenanceBooster;
-        const nbBoosters = mgDeNicotine / mgDeNicotineBooster;
+        this.nbBoosters = this.mgDeNicotine / mgDeNicotineBooster;
 
-        this.strResultatObtenir[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
-        this.strResultatObtenir[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
-        this.strResultatObtenir[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";
         this.erreurObtenir = false;
       }
       else
@@ -95,22 +99,19 @@ export class BasePage {
 
         if(this.tauxBaseDispo > this.tauxNicotineAObtenirDispo){
           //ajouterBase
-          let mlBaseAjouter:number; let mgDeNicotine:number; let mlBaseTotal:number;
+          let mlBaseTotal:number;
 
           let ratio:number = this.tauxNicotineAObtenirDispo/this.tauxBaseDispo;
 
-          mlBaseAjouter = this.baseDispo*ratio;
-          mlBaseTotal = this.baseDispo+mlBaseAjouter;
-          mgDeNicotine = mlBaseTotal*this.tauxNicotineAObtenirDispo;
+          this.mlBaseAjouter = this.baseDispo*ratio;
+          mlBaseTotal = this.baseDispo+this.mlBaseAjouter;
+          this.mgDeNicotine = mlBaseTotal*this.tauxNicotineAObtenirDispo;
 
-          this.strResultatDispo[0] = "Il vous faudra ajouter "+this.precisionRound(mlBaseAjouter, 1)+" ml de base nicotinée en 0mg/ml.";
-          this.strResultatDispo[1] = "Base totale après ajout : "+this.precisionRound(this.baseDispo + mlBaseAjouter, 1)+"ml.";
-          this.strResultatDispo[2] = "Nicotine au total : "+this.precisionRound(mgDeNicotine, 1)+"mg.";
           this.erreurDispo = false;
         }
         else{  //tauxBaseDispo < Voulu
           //ajouterBooster
-          var nbBoosters = 0; var mgDeNicotine = 0;
+          this.nbBoosters = 0; this.mgDeNicotine = 0;
 
           /*this.strResultatDispo[0] = "Il vous faudra "+this.precisionRound(nbBoosters, 1)+" boosters.";
           this.strResultatDispo[1] = "Soit "+this.precisionRound(this.contenanceBooster*nbBoosters, 1)+" mL de boosters.";
