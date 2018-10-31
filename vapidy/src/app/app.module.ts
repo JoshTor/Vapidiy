@@ -36,6 +36,7 @@ import { PrecisionRound } from './pipes/pipesFunctions';
     StatusBar,
     SplashScreen,
     NativeStorage,
+    PrecisionRound,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -15,7 +15,7 @@
   <p style="color: grey"><b>Max</b> : 50% - <b>Recommandé</b> : 10%</p>
   <ion-item>
     <ion-label class="text-responsive" color="primary" floating>Quantité de liquide à obtenir (mL)</ion-label>
-    <ion-input (tap)="erreur = true" type="number" [(ngModel)]="totaLiquide" required="true" clearInput=true min="1" max="5000"></ion-input>
+    <ion-input (tap)="erreur = true" type="number" [(ngModel)]="totaLiquide" required="true" clearInput=true min="1" max="1000"></ion-input>
   </ion-item>
   <p style="color: grey">Max : 1000 (mL)</p>
   <button (tap)="showGouttes()" ion-button full icon-only>
@@ -23,7 +23,7 @@
   </button>
   <div *ngIf="!erreur">
     <ion-item >
-      <p class="text-responsive">Résultat de votre composition finale :{{erreur}} <br><br>Arôme : {{qArome | precisionRound:1}} mL soit {{qArome*30 | precisionRound:0}} gouttes. <br>Liquide : {{totaLiquide-qArome | precisionRound:1}} mL</p>
+      <p class="text-responsive">Résultat de votre composition finale :<br><br>Arôme : {{qArome | precisionRound:1}} mL soit {{qArome*30 | precisionRound:0}} gouttes. <br>Liquide : {{totaLiquide-qArome | precisionRound:1}} mL</p>
     </ion-item>
   </div>
 </ion-content>

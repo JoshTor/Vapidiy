@@ -3,13 +3,11 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, ToastController, NavParams, AlertController } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
-import { PrecisionRound } from '../../app/pipes/pipesFunctions';
 
 @IonicPage()
 @Component({
   selector: 'page-base',
-  templateUrl: 'base.html',
-  pipes: [PrecisionRound]
+  templateUrl: 'base.html'
 })
 export class BasePage {
 
@@ -36,10 +34,6 @@ export class BasePage {
   mlBaseAjouter: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, private nativeStorage: NativeStorage, public alertCtrl: AlertController) {}
-  precisionRound(nb: number,precision: number){
-    const factor = Math.pow(10, precision);
-    return Math.round(nb * factor) / factor;
-  }
 
   public showBaseObtenir(){
     if(this.baseAObtenir < 1000 && this.baseAObtenir > 1 &&

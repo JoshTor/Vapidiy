@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController  } from 'ionic-angular';
-import { PrecisionRound } from '../../app/pipes/pipesFunctions';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  pipes: [PrecisionRound]
+  templateUrl: 'home.html'
 })
 export class HomePage {
 
@@ -25,7 +23,7 @@ export class HomePage {
     constructor(public navCtrl: NavController, public toastCtrl: ToastController) {}
 
     private showGouttes(){
-      if(this.parome < 50 && this.parome > 1 && this.totaLiquide < 1000 && this.totaLiquide > 1 ){
+      if(this.parome <= 50 && this.parome > 0 && this.totaLiquide <= 1000 && this.totaLiquide > 0 ){
         this.qArome = this.parome/100*this.totaLiquide;
         this.erreur = false;
       }
